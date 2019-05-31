@@ -60,7 +60,10 @@ odoo.define('send_order.buttons', function (require) {
                     bus_id: self.pos.config.bus_id[0],
                     order_uid: order['uid']
                 });
-                self.pos.delete_current_order();
+                if(self.pos.config.print_shipment_ticket){
+                    order.initialize_validation_date();
+                    self.gui.show_screen('receipt');
+                }
             });
 
         },
