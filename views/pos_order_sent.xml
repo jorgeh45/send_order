@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_order_sent_form" model="ir.ui.view">
+            <field name="name">pos.order_sent.form</field>
+            <field name="model">pos.order.sent</field>
+            <field name="arch" type="xml">
+                <form string="orders_sent">
+                    <sheet>
+                        <group>
+                            <field name="order_data"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_order_sent_tree" model="ir.ui.view">
+            <field name="name">pos.order_sent.tree</field>
+            <field name="model">pos.order.sent</field>
+            <field name="arch" type="xml">
+                <tree string="orders_sent" create ="0" edit="0">
+                    <field name="order_data"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_order_sent_search" model="ir.ui.view">
+            <field name="name">pos.order_sent.filter</field>
+            <field name="model">pos.order.sent</field>
+            <field name="arch" type="xml">
+                <search string="order_sent">
+                    <field name="order_data"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_order_sent">
+            <field name="name">Orders Sent</field>
+            <field name="res_model">pos.order.sent</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_order_sent"
+                  action="action_pos_order_sent"
+                  parent="menu_retail"
+                  sequence="115"
+        />
+
+    </data>
+</odoo>

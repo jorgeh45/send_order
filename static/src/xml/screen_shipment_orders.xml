@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+
+    <t t-name="shipment_orders_screen">
+        <div class="clientlist-screen screen">
+            <div class="full_width screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'/>
+                        Back
+                    </span>
+                    <span class='searchbox search-pos-order'>
+                        <input placeholder='Encontrar orden' />
+                        <span class='search-clear'/>
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix pos_detail'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                    <table class='client-list'>
+                                        <thead>
+                                            <tr>
+                                                <th><a href="#" class="sort sort_by_pos_order_id">ID</a><i class="fa fa-sort"/></th>
+                                                <th><a href="#">Nota</a></th>                                                
+                                                <th><a href="#" class="sort sort_by_pos_order_name">Name</a><i class="fa fa-sort"/></th>
+                                                <th><a href="#" class="sort sort_by_pos_order_barcode">Barcode</a><i class="fa fa-sort"/></th>
+                                                <th><a href="#" class="sort sort_by_pos_order_partner_name">Partner</a><i class="fa fa-sort"/></th>
+                                                <th><a href="#" class="sort sort_by_pos_order_amount_total">Total</a><i class="fa fa-sort"/></th>
+                                                <!-- <th><a href="#" class="sort sort_by_pos_order_amount_paid">Paid</a><i class="fa fa-sort"/></th> -->
+                                                <!-- <th><a href="#" class="sort sort_by_pos_order_amount_tax">Tax</a><i class="fa fa-sort"/></th> -->
+                                                <th><a href="#">Seller</a></th>
+                                                <!-- <th><a href="#">Debit</a></th>
+                                                <th><a href="#" class="sort sort_by_pos_order_state">State</a><i class="fa fa-sort"/></th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody class='client-list-contents pos_order_list list_values'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="pos_order_lines">
+        <section class='subwindow'>
+            <div class='subwindow-container'>
+                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                    <table class='client-list'>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Sub total</th>
+                            </tr>
+                        </thead>
+                        <tbody class='client-list-contents'>
+                            <t t-foreach='lines' t-as='line'>
+                                <tr class='client-line' t-att-data-id='line.id'>
+                                    <td><t t-esc='line.product_id[1]'/></td>
+                                    <td><t t-esc='line.qty'/></td>
+                                    <td><t t-esc='widget.format_currency(line.price_unit)'/></td>
+                                    <td><t t-esc='widget.format_currency(line.price_subtotal_incl)'/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </t>
+
+    <t t-name="pos_order_row">
+        <tr class='client-line pos_order_row' t-att-data-id='order.uid'>
+            <td><t t-esc='order.uid'/></td>
+            <td><t t-esc='order.sent_note'/></td>
+            <td><t t-esc='order.name'/></td>
+            <td><t t-esc='order.ean13'/></td>
+            <td>
+                <t t-if="order.partner_id">
+                    <t t-esc='order.partner_id.name'/>
+                </t>
+                <t t-if="!order.partner_id">
+                    N/A
+                </t>
+            </td>
+            <td><t t-esc='widget.format_currency(order.amount_total)'/></td>
+            <td><t t-esc='order.sender'/></td>
+        </tr>
+    </t>
+
+
+    <t t-name="send_orders_screen">
+        <div class="clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'/>
+                        Back
+                    </span>
+
+                    <span class='input-box'>
+                        <input class='sender' placeholder='Vendedor'/>
+                        <input class='input-note sent_note' placeholder='Nota'/>
+                    </span>
+
+                    <span class='button next'>
+                        Send
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+
+                    
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix pos_detail'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+
+                                  <table class='client-list'>
+                                        <thead>
+                                            <tr>
+                                                <th><a href="#" class="sort sort_by_pos_order_id">ID</a><i class="fa fa-sort"/></th>
+                                                <th><a href="#">Nota</a></th>                                                
+                                                <th><a href="#" class="sort sort_by_pos_order_name">Name</a><i class="fa fa-sort"/></th>
+                                                <th><a href="#" class="sort sort_by_pos_order_barcode">Barcode</a><i class="fa fa-sort"/></th>
+                                                <th><a href="#" class="sort sort_by_pos_order_partner_name">Partner</a><i class="fa fa-sort"/></th>
+                                                <th><a href="#" class="sort sort_by_pos_order_amount_total">Total</a><i class="fa fa-sort"/></th>
+                                                <!-- <th><a href="#" class="sort sort_by_pos_order_amount_paid">Paid</a><i class="fa fa-sort"/></th> -->
+                                                <!-- <th><a href="#" class="sort sort_by_pos_order_amount_tax">Tax</a><i class="fa fa-sort"/></th> -->
+                                                <th><a href="#">Seller</a></th>
+                                                <!-- <th><a href="#">Debit</a></th>
+                                                <th><a href="#" class="sort sort_by_pos_order_state">State</a><i class="fa fa-sort"/></th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody class='client-list-contents pos_order_list list_values'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+</templates>
