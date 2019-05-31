@@ -1,21 +1,61 @@
 <odoo>
     <data>
 
-        <record id="pos_config_inherit_send_order" model="ir.ui.view" >
+        <record id="pos_config_inherit_send_order" model="ir.ui.view">
             <field name="name">pos.config.form.inherit.send_order</field>
             <field name="model">pos.config</field>
             <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//sheet" position="inside">
-                    <notebook>
-                        <page string="ShipmentManagement">
-                            <group string="Pos Orders">
+                    <!-- <group string="Orders">
                                 <field name="send_pos_orders"/>
                                 <field name="search_pos_orders"/>
                                 <field name="prohibit_payment"/>
-                            </group>
-                        </page>
-                    </notebook>
+                            </group> -->
+
+                    <h2>Sent Orders</h2>
+
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-xs-12 col-md-6 o_setting_box" title="Permit users send the order to the others POS">
+                            <div class="o_setting_left_pane">
+                                <field name="send_pos_orders"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="send_pos_orders" string="Send Order"/>
+                                <div class="text-muted">
+                                    Send order to other POS
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-xs-12 col-md-6 o_setting_box" title="Permit search the sent orders">
+                            <div class="o_setting_left_pane">
+                                <field name="search_pos_orders"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="search_pos_orders" string="Search and Select Order"/>
+                                <div class="text-muted">
+                                    Search the sent orders and select it
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-xs-12 col-md-6 o_setting_box" title="Avoid users make payment">
+                            <div class="o_setting_left_pane">
+                                <field name="prohibit_payment"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="prohibit_payment" string="Prohibit Payment"/>
+                                <div class="text-muted">
+                                    Restrict make payment in this pos
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </xpath>
             </field>
         </record>

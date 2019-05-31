@@ -26,8 +26,60 @@ odoo.define('send_order.buttons', function (require) {
     var button_go_send_pos_orders_screen = screens.ActionButtonWidget.extend({ // shipment orders management
         template: 'button_go_send_pos_orders_screen',
         button_click: function () {
-            this.gui.show_screen('send_orders_screen');
-        }
+            this.send_order();
+        },
+        send_order: function () {
+            // debugger;
+            var self = this;
+
+            let order = self.pos.get_order();
+            if (order.get_orderlines().length == 0) {
+                self.gui.show_popup('error', {
+                    'title': 'Error: Orden Sin Productos',
+                    'body': 'No se ha agregado productos a la orden, no se puede realiza una precuenta vacia.',
+                    'cancel': function () {
+                        self.gui.show_screen('products');
+                    }
+                });
+
+                return;
+            }
+            order.sender = self.$('.sender').val();
+            order.sent_note = self.$('.sent_note').val();
+            order.partner_id = order.get_client();
+            order.amount_total = order.get_total_with_tax(),
+            order.is_sent = true
+            debugger;
+
+
+            //self.pos.db.save_data_sync_sent_order(order);
+
+            //self.pos.db.save_shipment_order(order);
+            self.send_order_to_server({
+                ...order.export_as_JSON(),
+                id: order.uid.replace(/-/g, '')
+            }).then(function () {
+                // self.pos.pos_bus.push_message_to_other_sessions({
+                //     data: order['uid'],
+                //     action: 'sent_order',
+                //     bus_id: self.pos.config.bus_id[0],
+                //     order_uid: order['uid']
+                // });
+                self.pos.delete_current_order();
+            });
+
+        },
+        send_order_to_server: function (order) {
+            return this._rpc({
+                route: '/pos/send_order',
+                params: {
+                    'data': {
+                        'uid_order': order.uid,
+                        'order_data': JSON.stringify(order)
+                    }
+                }
+            });
+        },
     });
     screens.define_action_button({
         'name': 'button_go_send_pos_orders_screen',

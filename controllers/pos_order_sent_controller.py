@@ -22,8 +22,6 @@ class PosOrderSent(http.Controller):
     def create_order_sent(self, **args):
         vals = args.get('data', False)
         if vals:
-            pp = pprint.PrettyPrinter(indent=4)
-            pp.pprint(vals)
             pos_order_sent_obj = http.request.env['pos.order.sent'].sudo()
             pos_order_sent_obj.create(vals)
 

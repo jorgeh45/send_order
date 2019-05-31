@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <template id="pos_retail_assets" name="pos_auto_invoice assets" inherit_id="point_of_sale.assets">
+    <template id="send_order_assets" name="pos_auto_invoice assets" inherit_id="point_of_sale.assets">
         <xpath expr="." position="inside">
-
-            <script type="text/javascript" src="/pos_retail/static/src/js/screen_shipment_orders.js"/>
+            <script type="text/javascript" src="/send_order/static/src/js/db.js"/>
+            <script type="text/javascript" src="/send_order/static/src/js/buttons.js"/>
+            <script type="text/javascript" src="/send_order/static/src/js/screen_shipment_orders.js"/>
         </xpath>
     </template>
 </odoo>

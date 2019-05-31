@@ -29,17 +29,11 @@
                                     <table class='client-list'>
                                         <thead>
                                             <tr>
-                                                <th><a href="#" class="sort sort_by_pos_order_id">ID</a><i class="fa fa-sort"/></th>
-                                                <th><a href="#">Nota</a></th>                                                
+                                                <th><a href="#" class="sort sort_by_pos_order_id">ID</a><i class="fa fa-sort"/></th>                                                
                                                 <th><a href="#" class="sort sort_by_pos_order_name">Name</a><i class="fa fa-sort"/></th>
-                                                <th><a href="#" class="sort sort_by_pos_order_barcode">Barcode</a><i class="fa fa-sort"/></th>
                                                 <th><a href="#" class="sort sort_by_pos_order_partner_name">Partner</a><i class="fa fa-sort"/></th>
                                                 <th><a href="#" class="sort sort_by_pos_order_amount_total">Total</a><i class="fa fa-sort"/></th>
-                                                <!-- <th><a href="#" class="sort sort_by_pos_order_amount_paid">Paid</a><i class="fa fa-sort"/></th> -->
-                                                <!-- <th><a href="#" class="sort sort_by_pos_order_amount_tax">Tax</a><i class="fa fa-sort"/></th> -->
-                                                <th><a href="#">Seller</a></th>
-                                                <!-- <th><a href="#">Debit</a></th>
-                                                <th><a href="#" class="sort sort_by_pos_order_state">State</a><i class="fa fa-sort"/></th> -->
+                                                <th><a href="#" class="sort sort_by_pos_order_amount_tax">Tax</a><i class="fa fa-sort"/></th>
                                             </tr>
                                         </thead>
                                         <tbody class='client-list-contents pos_order_list list_values'>
@@ -86,9 +80,7 @@
     <t t-name="pos_order_row">
         <tr class='client-line pos_order_row' t-att-data-id='order.uid'>
             <td><t t-esc='order.uid'/></td>
-            <td><t t-esc='order.sent_note'/></td>
             <td><t t-esc='order.name'/></td>
-            <td><t t-esc='order.ean13'/></td>
             <td>
                 <t t-if="order.partner_id">
                     <t t-esc='order.partner_id.name'/>
@@ -98,7 +90,7 @@
                 </t>
             </td>
             <td><t t-esc='widget.format_currency(order.amount_total)'/></td>
-            <td><t t-esc='order.sender'/></td>
+            <td><t t-esc='widget.format_currency(order.amount_tax)'/></td>
         </tr>
     </t>
 

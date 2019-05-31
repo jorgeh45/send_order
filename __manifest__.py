@@ -3,7 +3,7 @@
     'version': '1.0',
     'category': 'Point of Sale',
     'author': 'Jorge Miguel Hernandez Santos (dev.jhernandez@gmail.com)',
-    'sequence': 5,
+    'sequence': 30,
     'depends': [
         'point_of_sale',
     ],
@@ -14,10 +14,13 @@
         'views/template.xml'
     ],
     'qweb': [
-        'static/src/xml/screen_shipment_orders.xml'
+        'static/src/xml/screen_shipment_orders.xml',
+        'static/src/xml/buttons.xml',
+        
     ],
     'installable': True,
-    'images': ['static/description/send_order_logo.png'],
+    'application': True,
+    'images': ['static/description/icon.png'],
     'support': 'dev.jhernandez@gmail.com',
     'license': 'OPL-1',
 }
