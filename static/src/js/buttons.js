@@ -29,7 +29,6 @@ odoo.define('send_order.buttons', function (require) {
             this.send_order();
         },
         send_order: function () {
-            // debugger;
             var self = this;
 
             let order = self.pos.get_order();
@@ -63,6 +62,8 @@ odoo.define('send_order.buttons', function (require) {
                 if(self.pos.config.print_shipment_ticket){
                     order.initialize_validation_date();
                     self.gui.show_screen('receipt');
+                }else{
+                    self.pos.delete_current_order();
                 }
             });
 

@@ -34,27 +34,27 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
             input.focus();
 
             this.pos.bind('sync:order_sent', function () {
-             
-                    self.get_orders_sent().then((orders) => {
-                        if (orders) {
-                            let count_order = orders.length;
-                            let list_orders = [];
-                            for (let i = 0; i < count_order; i++) {
-                                const order_data = orders[i];
-                                const order = order_data.data
-                                list_orders.push(order);
-                            }
-                            self.pos.db.save_data_sync_sent_order(list_orders);
 
-                            if(!input.value){          
-                                self.render_shipment_order_list(self.pos.db.shipment_orders_store);
-                            }else{
-                                self.perform_search(input.value);
-                            }
+                self.get_orders_sent().then((orders) => {
+                    if (orders) {
+                        let count_order = orders.length;
+                        let list_orders = [];
+                        for (let i = 0; i < count_order; i++) {
+                            const order_data = orders[i];
+                            const order = order_data.data
+                            list_orders.push(order);
                         }
-                    });
-        
-                
+                        self.pos.db.save_data_sync_sent_order(list_orders);
+
+                        if (!input.value) {
+                            self.render_shipment_order_list(self.pos.db.shipment_orders_store);
+                        } else {
+                            self.perform_search(input.value);
+                        }
+                    }
+                });
+
+
             });
 
         },
@@ -288,30 +288,16 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                         price: line.price_unit,
                         discount: line.discount
                     });
-                    
-                    new_order.set_client(this.pos.db.get_partner_by_id(order.partner_id.id));
 
+                    if (order.partner_id) {
+                        new_order.set_client(this.pos.db.get_partner_by_id(order.partner_id.id) || order.partner_id);
+                    }
                 }
 
 
             });
 
-
-
-
-
-            // for (var i = 0; i < order_line_data.length; i++) {
-            //     if (order_line_data[i].order_id[0] == this.id) {
-            //         var product = self.pos.db.get_product_by_id(order_line_data[i].product_id[0]);
-            //         new_order.add_product(product, {quantity: order_line_data[i].qty});
-            //     }
-            // }
             this.gui.show_screen('products');
-
-            // this.$('.client-line').removeClass('highlight');
-            // $order.addClass('highlight');
-            // this.display_pos_order_detail(order);
-            // this.order_selected = order;
         },
         render_sent_order_list: function (orders) {
 

@@ -1,4 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_pos_order_sent,access_pos_order_sent,model_pos_order_sent,,1,1,1,1
 access_pos_bus,access_pos_bus,model_pos_bus,,1,1,1,1
-access_pos_bus_log,access_pos_bus_log,model_pos_bus_log,,1,1,1,1

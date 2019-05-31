@@ -22,9 +22,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row mt16 o_settings_container">
+
+
                         <div class="col-xs-12 col-md-6 o_setting_box" title="Permit search the sent orders">
                             <div class="o_setting_left_pane">
                                 <field name="search_pos_orders"/>
@@ -36,8 +36,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt16 o_settings_container">
+
+
+
                         <div class="col-xs-12 col-md-6 o_setting_box" title="Avoid users make payment">
                             <div class="o_setting_left_pane">
                                 <field name="prohibit_payment"/>
@@ -49,9 +50,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt16 o_settings_container">
-                        <div class="col-xs-12 col-md-6 o_setting_box" title="Print a ticket after send the order">
+                        <div class="col-xs-6 col-md-6 o_setting_box" title="Print a ticket after send the order">
                             <div class="o_setting_left_pane">
                                 <field name="print_shipment_ticket"/>
                             </div>
@@ -62,15 +61,24 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="bus_id">
+                            <div class="o_setting_right_pane">
+                                <div class="content-group mt16" attrs="{'invisible': [('search_pos_orders', '=', False),
+                                               ('send_pos_orders', '=', False)]}">
+
+                                    <label for="bus_id"/>
+                                    <div class="row mt16">
+                                        <label string="Notifier" for="bus_id" class="col-md-3 o_light_label"/>
+                                        <field name="bus_id" attrs="{'required': ['|',('search_pos_orders', '=', True),
+                                               ('send_pos_orders', '=', True)]}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-
-
-                    <div id ="pos_bus_id">
-                        <field name="bus_id" invisible="1"/>
-                    </div>
-
-
-
 
                 </xpath>
             </field>
