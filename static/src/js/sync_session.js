@@ -160,7 +160,7 @@ odoo.define('send_order.synchronization', function (require) {
                         self.chrome.loading_message(_t('Active sync between sessions'), 1);
                         self.pos_bus = new exports.pos_bus(self);
                         self.pos_bus.start();
-                        console.log('Actived sync between sessions')
+                        // console.log('Actived sync between sessions')
                     }
                 }
             })

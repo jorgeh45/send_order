@@ -17,6 +17,7 @@
     'qweb': [
         'static/src/xml/screen_shipment_orders.xml',
         'static/src/xml/buttons.xml',
+        'static/src/xml/receipt.xml',
         
     ],
     'installable': True,

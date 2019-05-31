@@ -20,7 +20,7 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
             this.reverse = true;
             this._super(parent, options);
             this.pos_order_cache = new screens.DomCache();
-            console.log("Shipment se inicio");
+
 
         },
         show: function () {
@@ -34,7 +34,6 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
             input.focus();
 
             this.pos.bind('sync:order_sent', function () {
-                console.log("sync:order_sent: Shipments Screen");
              
                     self.get_orders_sent().then((orders) => {
                         if (orders) {
@@ -237,9 +236,6 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                 }
             });
 
-
-
-            console.log("Shipment se renderizo");
 
         },
         clear_search: function () {

@@ -11,6 +11,7 @@ odoo.define('send_order.screens', function (require) {
 
             this.$('.send').click(function () {
                 self.send_order();
+               
             });
 
         },
@@ -33,7 +34,7 @@ odoo.define('send_order.screens', function (require) {
             order.sent_note = self.$('.sent_note').val();
             order.partner_id = order.get_client();
             order.amount_total = order.get_total_with_tax(),
-                order.is_sent = true
+            order.is_sent = true
 
             self.send_order_to_server({
                 ...order.export_as_JSON(),
@@ -45,7 +46,11 @@ odoo.define('send_order.screens', function (require) {
                     bus_id: self.pos.config.bus_id[0],
                     order_uid: order['uid']
                 });
-                self.pos.delete_current_order();
+
+                if(self.pos.config.print_shipment_ticket){
+                    order.initialize_validation_date();
+                    self.gui.show_screen('receipt');
+                }
             });
 
         },
