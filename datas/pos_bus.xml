@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="pos_bus_store_default" model="pos.bus">
+        <field name="name">Store for all Pos</field>
+    </record>
+    </data>
+</odoo>
+

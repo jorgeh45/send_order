@@ -9,6 +9,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'datas/pos_bus.xml',
         'views/pos_config.xml',
         'views/pos_order_sent.xml',
         'views/template.xml'

@@ -3,8 +3,13 @@
 
     <template id="send_order_assets" name="pos_auto_invoice assets" inherit_id="point_of_sale.assets">
         <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/send_order/static/src/css/pos.css"/>
             <script type="text/javascript" src="/send_order/static/src/js/db.js"/>
             <script type="text/javascript" src="/send_order/static/src/js/buttons.js"/>
+            <script type="text/javascript" src="/send_order/static/src/js/rpc.js"/>
+            <script type="text/javascript" src="/send_order/static/src/js/sync_session.js"/>
+            <script type="text/javascript" src="/send_order/static/src/js/order.js"/>
+            <script type="text/javascript" src="/send_order/static/src/js/screen.js"/>
             <script type="text/javascript" src="/send_order/static/src/js/screen_shipment_orders.js"/>
         </xpath>
     </template>

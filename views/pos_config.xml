@@ -54,7 +54,13 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id ="pos_bus_id">
+                            <field name="bus_id" invisible="1"/>
+                        </div>
+
                     </div>
+
 
                 </xpath>
             </field>

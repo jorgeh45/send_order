@@ -1,0 +1,20 @@
+.pos .actionpad .button.send {
+    height: 162px;
+}
+.pos .actionpad .button.send .pay-circle {
+    display: block;
+    font-size: 32px;
+    line-height: 54px;
+    padding-top: 2px;
+    background: rgb(86, 86, 86);
+    color: white;
+    width: 60px;
+    margin: auto;
+    border-radius: 30px;
+    margin-bottom: 10px;
+}
+.pos .actionpad .button.send .pay-circle .fa {
+    position: relative;
+    top: -1px;
+    right: 2px;
+}

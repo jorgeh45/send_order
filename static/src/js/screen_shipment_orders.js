@@ -267,7 +267,6 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
             return '/web/image?model=res.partner&id=' + id + '&field=image_small';
         },
         order_select: function (event, $order, id) {
-            // debugger
             let order = this.pos.db.shipment_order_by_id[id];
 
             this.select_order_sent(order.uid).then(() => {
@@ -293,6 +292,8 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                         price: line.price_unit,
                         discount: line.discount
                     });
+                    
+                    new_order.set_client(this.pos.db.get_partner_by_id(order.partner_id.id));
 
                 }
 
@@ -493,160 +494,6 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
     gui.define_screen({
         name: 'shipment_orders_screen',
         widget: shipment_orders_screen
-    });
-
-    var send_orders_screen = screens.ScreenWidget.extend({
-        template: 'send_orders_screen',
-        init: function (parent, options) {
-            var self = this;
-            this.reverse = true;
-            this._super(parent, options);
-            this.pos_order_cache = new screens.DomCache();
-            this.pos.bind('sync:pos_order', function () {
-                self.hide_order_selected();
-                self.renderElement();
-            });
-
-          
-            console.log("Shipment se inicio");
-
-        },
-        show: function () {
-            this._super();
-            let self = this;
-            this.$('.sender').val('');
-            this.$('.sent_note').val('');
-            this.$('.sent_note').focus();
-
-            this.pos.bind('sync:order_sent', function () {
-                console.log("sync:order_sent: Send Screen");
-                self.show_orders();
-            });
-
-        },
-        show_orders: function () {
-
-            this.get_orders_sent().then((orders) => {
-                console.log(orders);
-                if (orders) {
-                    let count_order = orders.length;
-                    let list_orders = [];
-                    for (let i = 0; i < count_order; i++) {
-                        const order_data = orders[i];
-                        const order = order_data.data
-                        list_orders.push(order);
-                    }
-                    this.pos.db.save_data_sync_sent_order(list_orders);
-                    this.render_shipment_order_list(this.pos.db.shipment_orders_store);
-                }
-            });
-
-        },
-        renderElement: function () {
-
-            this.search_orders = [];
-            var self = this;
-
-            this._super();
-            this.$('.back').click(function () {
-                self.gui.show_screen('products');
-            });
-
-            this.$('.next').click(function () {
-                self.send_order();
-            });
-
-        },
-        render_shipment_order_list: function (orders) {
-
-            var contents = this.$el[0].querySelector('.pos_order_list');
-            contents.innerHTML = "";
-            let count_orders = orders.length;
-            for (var i = 0, len = Math.min(count_orders, 1000); i < len; i++) {
-                let order = orders[i];
-                var pos_order_row = this.pos_order_cache.get_node(order.id);
-                if (!pos_order_row) {
-                    var pos_order_row_html = qweb.render('pos_order_row', {
-                        widget: this,
-                        order: order
-                    });
-                    var pos_order_row = document.createElement('tbody');
-                    pos_order_row.innerHTML = pos_order_row_html;
-                    pos_order_row = pos_order_row.childNodes[1];
-                    this.pos_order_cache.cache_node(order.id, pos_order_row);
-                }
-                if (order === this.order_selected) {
-                    pos_order_row.classList.add('highlight');
-                } else {
-                    pos_order_row.classList.remove('highlight');
-                }
-                contents.appendChild(pos_order_row);
-            }
-
-
-        },
-        send_order: function () {
-            // debugger;
-            var self = this;
-
-            let order = self.pos.get_order();
-            if (order.get_orderlines().length == 0) {
-                self.gui.show_popup('error', {
-                    'title': 'Error: Orden Sin Productos',
-                    'body': 'No se ha agregado productos a la orden, no se puede realiza una precuenta vacia.',
-                    'cancel': function () {
-                        self.gui.show_screen('products');
-                    }
-                });
-
-                return;
-            }
-            order.sender = self.$('.sender').val();
-            order.sent_note = self.$('.sent_note').val();
-            order.partner_id = order.get_client();
-            order.amount_total = order.get_total_with_tax(),
-            order.is_sent = true
-
-
-            //self.pos.db.save_data_sync_sent_order(order);
-
-            //self.pos.db.save_shipment_order(order);
-            self.send_order_to_server({
-                ...order.export_as_JSON(),
-                id: order.uid.replace(/-/g, '')
-            }).then(function () {
-                self.pos.pos_bus.push_message_to_other_sessions({
-                    data: order['uid'],
-                    action: 'sent_order',
-                    bus_id: self.pos.config.bus_id[0],
-                    order_uid: order['uid']
-                });
-                self.pos.delete_current_order();
-            });
-
-        },
-        send_order_to_server: function (order) {
-            return this._rpc({
-                route: '/pos/send_order',
-                params: {
-                    'data': {
-                        'uid_order': order.uid,
-                        'order_data': JSON.stringify(order)
-                    }
-                }
-            });
-        },
-        get_orders_sent: function () {
-            return this._rpc({
-                route: '/pos/get_orders_sent'
-            });
-        }
-
-    });
-
-    gui.define_screen({
-        name: 'send_orders_screen',
-        widget: send_orders_screen
     });
 
 

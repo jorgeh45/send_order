@@ -24,7 +24,7 @@ odoo.define('send_order.database', function (require) {
             var str = order.ean13;
             str += '|' + order.name;
             if (order.partner_id) {
-                var partner = this.partner_by_id[order.partner_id[0]]
+                var partner = this.partner_by_id[order.partner_id.id]
                 if (partner) {
                     if (partner['name']) {
                         str += '|' + partner['name'];
@@ -40,16 +40,7 @@ odoo.define('send_order.database', function (require) {
                     }
                 }
             }
-            if(order.sent_note){
-                str += '|' + order['sent_note'];
-            }
 
-            if(order.sender){
-                str += '|' + order['sender'];
-            }
-            if (order.date_order) {
-                str += '|' + order['date_order'];
-            }
             str = '' + order['id'] + ':' + str.replace(':', '') + '\n';
             return str;
         },
