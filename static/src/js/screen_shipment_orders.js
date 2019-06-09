@@ -288,10 +288,10 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                         price: line.price_unit,
                         discount: line.discount
                     });
-
-                    if (order.partner_id) {
-                        new_order.set_client(this.pos.db.get_partner_by_id(order.partner_id.id) || order.partner_id);
-                    }
+                }
+                
+                if (order.partner_id) {
+                    new_order.set_client(this.pos.db.get_partner_by_id(order.partner_id.id) || order.partner_id);
                 }
 
 
