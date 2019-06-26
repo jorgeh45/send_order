@@ -17,6 +17,7 @@ class pos_config(models.Model):
     search_pos_orders = fields.Boolean('Search pos orders sent', default=0)
     prohibit_payment = fields.Boolean('Prohibit payment', default=0)
     print_shipment_ticket = fields.Boolean('Print shipment ticket', default=0)
+    print_picking_ticket = fields.Boolean('Print picking ticket', default=0)
 
     bus_id = fields.Many2one('pos.bus', string='Server',
     default= _default_bus_id )
