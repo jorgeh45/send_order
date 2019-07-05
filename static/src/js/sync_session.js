@@ -156,7 +156,7 @@ odoo.define('send_order.synchronization', function (require) {
             var self = this;
             return _super_PosModel.load_server_data.apply(this, arguments).then(function () {
                 if (self.config.bus_id) {
-                    if (self.config.send_pos_orders || search_pos_orders) {
+                    if (self.config.send_pos_orders || self.config.search_pos_orders) {
                         self.chrome.loading_message(_t('Active sync between sessions'), 1);
                         self.pos_bus = new exports.pos_bus(self);
                         self.pos_bus.start();
