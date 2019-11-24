@@ -3,7 +3,7 @@ odoo.define('send_order.synchronization', function (require) {
     var rpc = require('pos.rpc');
     var exports = {}
     var Backbone = window.Backbone;
-    var bus = require('bus.bus');
+    var bus = require('pos.bus');
     var core = require('web.core');
     var _t = core._t;
     var session = require('web.session');

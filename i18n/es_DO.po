@@ -4,108 +4,135 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-26 19:55+0000\n"
-"PO-Revision-Date: 2019-06-26 16:17-0400\n"
+"POT-Creation-Date: 2019-11-24 03:46+0000\n"
+"PO-Revision-Date: 2019-11-23 23:56-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: es\n"
-"X-Generator: Poedit 2.2.3\n"
+"Language: es_DO\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:82
 #, python-format
 msgid "$/Und."
-msgstr "$/Und."
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:128
 #, python-format
 msgid "% descuento"
-msgstr "% descuento"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:143
 #, python-format
 msgid "&nbsp;E"
-msgstr "&nbsp;E"
+msgstr ""
+
+#. module: send_order
+#: model:ir.model.fields,field_description:send_order.field_pos_bus_log__action
+msgid "Action"
+msgstr "Acción"
 
 #. module: send_order
 #. openerp-web
-#: code:addons/send_order/static/src/js/sync_session.js:160
+#: code:addons/send_order/static/src/js/sync_session.js:161
 #, python-format
 msgid "Active sync between sessions"
-msgstr "Sincronización activa entre sesiones"
+msgstr ""
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: selection:pos.bus.log,action:0
+msgid "Add order"
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Add pricelist"
+msgstr ""
+
+#. module: send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Avoid users make payment"
-msgstr "Evitar que los usuarios realicen pagos."
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/screen_shipment_orders.xml:10
 #, python-format
 msgid "Back"
-msgstr "Atras"
+msgstr ""
+
+#. module: send_order
+#: model:ir.model.fields,field_description:send_order.field_pos_bus_log__bus_id
+msgid "Branch/Store"
+msgstr "Sucursal/Tienda"
 
 #. module: send_order
 #: model:ir.model,name:send_order.model_pos_bus
 msgid "Branch/Store of shops"
-msgstr "Sucursal / Tienda de tiendas."
+msgstr "Sucursal /Tienda "
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:200
 #, python-format
 msgid "Cambio:"
-msgstr "Cambio:"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:76
 #, python-format
 msgid "Cant."
-msgstr "Cant."
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Change order"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/js/screen.js:114
 #, python-format
 msgid "Check your internet connection and try again."
-msgstr "Comprueba tu conexión a internet y vuelve a intentarlo."
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:39
 #, python-format
 msgid "Cliente..:"
-msgstr "Cliente..:"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:128
 #, python-format
 msgid "Con un&nbsp;"
-msgstr "Con un&nbsp;"
+msgstr ""
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_bus_create_uid
-#: model:ir.model.fields,field_description:send_order.field_pos_order_sent_create_uid
+#: model:ir.model.fields,field_description:send_order.field_pos_bus__create_uid
+#: model:ir.model.fields,field_description:send_order.field_pos_bus_log__create_uid
+#: model:ir.model.fields,field_description:send_order.field_pos_order_sent__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_bus_create_date
-#: model:ir.model.fields,field_description:send_order.field_pos_order_sent_create_date
+#: model:ir.model.fields,field_description:send_order.field_pos_bus__create_date
+#: model:ir.model.fields,field_description:send_order.field_pos_bus_log__create_date
+#: model:ir.model.fields,field_description:send_order.field_pos_order_sent__create_date
 msgid "Created on"
 msgstr "Creado en"
 
@@ -114,18 +141,19 @@ msgstr "Creado en"
 #: code:addons/send_order/static/src/xml/receipt.xml:43
 #, python-format
 msgid "Código..:"
-msgstr "Código..:"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:174
 #, python-format
 msgid "Descuento:"
-msgstr "Descuento:"
+msgstr ""
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_bus_display_name
-#: model:ir.model.fields,field_description:send_order.field_pos_order_sent_display_name
+#: model:ir.model.fields,field_description:send_order.field_pos_bus__display_name
+#: model:ir.model.fields,field_description:send_order.field_pos_bus_log__display_name
+#: model:ir.model.fields,field_description:send_order.field_pos_order_sent__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -134,13 +162,14 @@ msgstr "Nombre mostrado"
 #: code:addons/send_order/static/src/xml/receipt.xml:34
 #, python-format
 msgid "Fecha....:"
-msgstr "Fecha....:"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/screen_shipment_orders.xml:33
-#: model:ir.model.fields,field_description:send_order.field_pos_bus_id
-#: model:ir.model.fields,field_description:send_order.field_pos_order_sent_id
+#: model:ir.model.fields,field_description:send_order.field_pos_bus__id
+#: model:ir.model.fields,field_description:send_order.field_pos_bus_log__id
+#: model:ir.model.fields,field_description:send_order.field_pos_order_sent__id
 #, python-format
 msgid "ID"
 msgstr "ID (identificación)"
@@ -150,66 +179,84 @@ msgstr "ID (identificación)"
 #: code:addons/send_order/static/src/xml/receipt.xml:85
 #, python-format
 msgid "Imp."
-msgstr "Imp."
+msgstr ""
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_bus___last_update
-#: model:ir.model.fields,field_description:send_order.field_pos_order_sent___last_update
+#: model:ir.model.fields,field_description:send_order.field_pos_bus____last_update
+#: model:ir.model.fields,field_description:send_order.field_pos_bus_log____last_update
+#: model:ir.model.fields,field_description:send_order.field_pos_order_sent____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_bus_write_uid
-#: model:ir.model.fields,field_description:send_order.field_pos_order_sent_write_uid
+#: model:ir.model.fields,field_description:send_order.field_pos_bus__write_uid
+#: model:ir.model.fields,field_description:send_order.field_pos_bus_log__write_uid
+#: model:ir.model.fields,field_description:send_order.field_pos_order_sent__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización de"
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_bus_write_date
-#: model:ir.model.fields,field_description:send_order.field_pos_order_sent_write_date
+#: model:ir.model.fields,field_description:send_order.field_pos_bus__write_date
+#: model:ir.model.fields,field_description:send_order.field_pos_bus_log__write_date
+#: model:ir.model.fields,field_description:send_order.field_pos_order_sent__write_date
 msgid "Last Updated on"
 msgstr "Última actualización en"
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_bus_name
+#: model:ir.model.fields,field_description:send_order.field_pos_bus__name
 msgid "Location Name"
 msgstr "Nombre de ubicación"
 
 #. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Lock order"
+msgstr "Bloquear orden"
+
+#. module: send_order
+#: model:ir.model.fields,field_description:send_order.field_pos_bus__log_ids
+msgid "Logs"
+msgstr ""
+
+#. module: send_order
 #: model:ir.model,name:send_order.model_pos_order_sent
 msgid "Management orders sent to another user of the pos"
-msgstr "Órdenes de gestión enviadas a otro usuario de la pos."
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/screen_shipment_orders.xml:78
 #, python-format
 msgid "N/A"
-msgstr "N/A"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/screen_shipment_orders.xml:37
 #, python-format
 msgid "Name"
-msgstr "Nombre"
+msgstr ""
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Notifier"
-msgstr "Notificador"
+msgstr ""
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_order_sent_order_data
+#: model:ir.model.fields,field_description:send_order.field_pos_order_sent__order_data
 msgid "Order data"
-msgstr "Orden datos"
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Paid order"
+msgstr "Orden Pagada"
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/screen_shipment_orders.xml:41
 #, python-format
 msgid "Partner"
-msgstr "Cliente"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
@@ -220,126 +267,146 @@ msgid "Payment"
 msgstr "Pago"
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Permit search the sent orders"
-msgstr "Permitir buscar las órdenes enviadas."
+msgstr "Permitir buscar los pedidos enviados"
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Permit users send the order to the others POS"
-msgstr "Permitir a los usuarios enviar el pedido a los demás puntos de venta."
+msgstr "Permitir que los usuarios envíen el pedido a los demás POS"
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/js/screen.js:102
 #, python-format
 msgid "Please print the invoice from the backend"
-msgstr "Por favor imprima la factura del backend"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/js/screen.js:94
 #, python-format
 msgid "Please select the Customer"
-msgstr "Por favor seleccione el cliente"
+msgstr ""
 
 #. module: send_order
-#: model:ir.model,name:send_order.model_pos_order
-msgid "Point of Sale Orders"
-msgstr "Pedidos del Punto de Venta"
+#: model:ir.model,name:send_order.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del TPV"
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Print Picking"
-msgstr "Imprimir Conduce"
-
-#. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
-msgid "Print Ticket"
 msgstr "Imprimir Recibo"
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+msgid "Print Ticket"
+msgstr "Imprimir Ticket"
+
+#. module: send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Print a ticket after send the order"
-msgstr "Imprime un ticket después de enviar el pedido."
+msgstr "imprimir Ticket despues de enviar la orden"
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Print a ticket when of the sent order"
-msgstr "Imprima un ticket cuando del pedido enviado."
+msgstr "Imprima un ticket cuando del pedido enviado"
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_config_print_picking_ticket
+#: model:ir.model.fields,field_description:send_order.field_pos_config__print_picking_ticket
 msgid "Print picking ticket"
-msgstr "Imprimir ticket de conduce"
+msgstr "Imprimir ticket de recibo"
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_config_print_shipment_ticket
+#: model:ir.model.fields,field_description:send_order.field_pos_config__print_shipment_ticket
 msgid "Print shipment ticket"
-msgstr "Imprimir el ticket de envío"
+msgstr "Imprimir ticket de envio"
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Print the picking of the order"
-msgstr "Imprimir el conduce del pedido."
+msgstr "Imprime el recibo del pedido"
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:79
 #, python-format
 msgid "Producto"
-msgstr "Producto"
+msgstr ""
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Prohibit Payment"
 msgstr "Prohibir Pago"
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_config_prohibit_payment
+#: model:ir.model.fields,field_description:send_order.field_pos_config__prohibit_payment
 msgid "Prohibit payment"
-msgstr "Prohibir el pago"
+msgstr "Prohibir Pago"
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:24
 #, python-format
 msgid "Recibo de Venta"
-msgstr "Recibo de Venta"
+msgstr ""
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: selection:pos.bus.log,action:0
+msgid "Remove line"
+msgstr "Eliminar Linea"
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Remove order"
+msgstr "Remover orden"
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Request printer"
+msgstr "Solicitar Imprimir"
+
+#. module: send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Restrict make payment in this pos"
-msgstr "Restringir el pago en estae TPV"
+msgstr "Restringir realizar pago en esta pos"
+
+#. module: send_order
+#: model:ir.model.fields,field_description:send_order.field_pos_bus__user_id
+msgid "Sale admin"
+msgstr "Administrador"
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/buttons.xml:6
 #, python-format
 msgid "Search Orders"
-msgstr "Buscar Ordenes"
+msgstr "Buscar ordenes"
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Search and Select Order"
-msgstr "Buscar y Seleccionar Orden"
+msgstr "Buscar y seleccionar orden"
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/screen_shipment_orders.xml:14
 #, python-format
 msgid "Search order"
-msgstr "Buscar orden"
+msgstr "Orden de búsqueda"
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_config_search_pos_orders
+#: model:ir.model.fields,field_description:send_order.field_pos_config__search_pos_orders
 msgid "Search pos orders sent"
-msgstr "Buscar pedidos de tpv enviados"
+msgstr "Buscar pedidos enviados"
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Search the sent orders and select it"
-msgstr "Busca los pedidos enviados y selecciónalo"
+msgstr "Buscar los pedidos enviados y seleccionarlo"
 
 #. module: send_order
 #. openerp-web
@@ -351,29 +418,39 @@ msgstr "Enviar"
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/buttons.xml:13
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 #, python-format
 msgid "Send Order"
 msgstr "Enviar Orden"
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
-msgid "Send order to other POS"
-msgstr "Enviar pedido a otro punto de venta"
+#: model:ir.model.fields,field_description:send_order.field_pos_bus_log__user_id
+msgid "Send from"
+msgstr "Enviado desde"
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_config_send_pos_orders
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+msgid "Send order to other POS"
+msgstr "Enviar orden a otro POS"
+
+#. module: send_order
+#: model:ir.model.fields,field_description:send_order.field_pos_config__send_pos_orders
 msgid "Send pos orders"
-msgstr "Enviar órdenes tpv"
+msgstr "Enviar Pedidos Pos"
 
 #. module: send_order
 #: model:ir.ui.menu,name:send_order.menu_sent_order
-#: model:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
+#: model_terms:ir.ui.view,arch_db:send_order.pos_config_inherit_send_order
 msgid "Sent Orders"
-msgstr "Enviar Órdenes"
+msgstr "Ordenes Enviadas"
 
 #. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_config_bus_id
+#: selection:pos.bus.log,action:0
+msgid "Sent order"
+msgstr "Orden Enviada"
+
+#. module: send_order
+#: model:ir.model.fields,field_description:send_order.field_pos_config__bus_id
 msgid "Server"
 msgstr "Servidor"
 
@@ -382,95 +459,135 @@ msgstr "Servidor"
 #: code:addons/send_order/static/src/js/screen.js:118
 #, python-format
 msgid "Server Error"
-msgstr "Error del Servidor"
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Set customer"
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Set guest"
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Set note"
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Set state"
+msgstr ""
 
 #. module: send_order
 #: model:ir.actions.act_window,name:send_order.action_pos_order_sent
 #: model:ir.ui.menu,name:send_order.menu_action_pos_order_sent
 msgid "Shipment"
-msgstr "Envío"
+msgstr "Wnvio"
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:156
 #, python-format
 msgid "SubTotal:"
-msgstr "SubTotal:"
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Sync sequence order"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/screen_shipment_orders.xml:49
 #, python-format
 msgid "Tax"
-msgstr "Impuesto"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:48
 #, python-format
 msgid "Telefono.:"
-msgstr "Telefono.:"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/js/screen.js:113
 #, python-format
 msgid "The order could not be sent"
-msgstr "The order could not be sent"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/js/screen.js:124
 #, python-format
 msgid "The order could not be sent to the server due to an unknown error"
-msgstr "El pedido no se pudo enviar al servidor debido a un error desconocido"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/js/screen.js:103
 #, python-format
 msgid "The order has been synchronized earlier. Please make the invoice from the backend for the order: "
-msgstr "El pedido ha sido sincronizado anteriormente. Por favor haga la factura del backend para el pedido:"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/js/screen.js:119
 #, python-format
 msgid "The server encountered an error while receiving your order."
-msgstr "El servidor encontró un error al recibir su pedido."
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/screen_shipment_orders.xml:45
 #, python-format
 msgid "Total"
-msgstr "Total"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:184
 #, python-format
 msgid "Total:"
-msgstr "Total:"
+msgstr ""
 
 #. module: send_order
 #: model:ir.model,name:send_order.model_pos_bus_log
 msgid "Transactions of Branch/Store"
-msgstr "Transacciones de Sucursal / Tienda."
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Transfer to new table"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/js/screen.js:123
 #, python-format
 msgid "Unknown Error"
-msgstr "Error desconocido"
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Unlock order"
+msgstr ""
+
+#. module: send_order
+#: selection:pos.bus.log,action:0
+msgid "Update line"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/xml/receipt.xml:88
 #, python-format
 msgid "Valor"
-msgstr "Valor"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
@@ -478,32 +595,27 @@ msgstr "Valor"
 #: code:addons/send_order/static/src/xml/receipt.xml:63
 #, python-format
 msgid "Vendedor/a.:"
-msgstr "Vendedor/a.:"
+msgstr ""
 
 #. module: send_order
 #. openerp-web
 #: code:addons/send_order/static/src/js/screen.js:95
 #, python-format
 msgid "You need to select the customer before you can invoice an order."
-msgstr "Debe seleccionar el cliente antes de poder facturar un pedido."
+msgstr ""
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_order_sent_search
+#: model_terms:ir.ui.view,arch_db:send_order.pos_order_sent_search
 msgid "order_sent"
-msgstr "order_sent"
+msgstr ""
 
 #. module: send_order
-#: model:ir.ui.view,arch_db:send_order.pos_order_sent_form
-#: model:ir.ui.view,arch_db:send_order.pos_order_sent_tree
+#: model_terms:ir.ui.view,arch_db:send_order.pos_order_sent_form
+#: model_terms:ir.ui.view,arch_db:send_order.pos_order_sent_tree
 msgid "orders_sent"
-msgstr "orders_sent"
+msgstr ""
 
 #. module: send_order
-#: model:ir.model,name:send_order.model_pos_config
-msgid "pos.config"
-msgstr "pos.config"
-
-#. module: send_order
-#: model:ir.model.fields,field_description:send_order.field_pos_order_sent_uid_order
+#: model:ir.model.fields,field_description:send_order.field_pos_order_sent__uid_order
 msgid "uid_order"
-msgstr "uid_order"
+msgstr ""

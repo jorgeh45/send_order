@@ -2,4 +2,3 @@
 from . import pos_bus
 from . import pos_config
 from . import pos_order_sent
-from . import pos_order

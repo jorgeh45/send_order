@@ -2,11 +2,10 @@
 from odoo import api, fields, models, _
 
 
-class pos_config(models.Model):
-    _inherit = "pos.config"
+class PosConfig(models.Model):
+    _inherit = 'pos.config'
 
 
-    @api.model
     def _default_bus_id(self):
         try:
             return self.env.ref('send_order.pos_bus_store_default')
@@ -19,7 +18,6 @@ class pos_config(models.Model):
     print_shipment_ticket = fields.Boolean('Print shipment ticket', default=0)
     print_picking_ticket = fields.Boolean('Print picking ticket', default=0)
 
-    bus_id = fields.Many2one('pos.bus', string='Server',
-    default= _default_bus_id )
+    bus_id = fields.Many2one('pos.bus', string='Server', default= _default_bus_id )
 
   
