@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
-    <t t-extend="PosTicket">
+    <!-- <t t-extend="PosTicket">
         <t t-jquery="t[t-esc='order.formatted_validation_date']" t-operation="replace"/>
         <t t-jquery="t[t-esc='order.name']" t-operation="replace"/>
         <t t-jquery="t[t-esc='widget.pos.company.name']" t-operation="replace">
@@ -206,7 +206,7 @@
                 </tr>
             </table>
         </t>
-    </t>
+    </t> -->
 
 </templates>
 
