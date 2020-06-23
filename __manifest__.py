@@ -12,6 +12,7 @@
         'datas/pos_bus.xml',
         'views/pos_config.xml',
         'views/pos_order_sent.xml',
+        'views/pos_bus.xml',
         'views/template.xml'
     ],
     'qweb': [

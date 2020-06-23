@@ -2,6 +2,7 @@
 odoo.define('send_order.screens', function (require) {
 
     var screens = require('point_of_sale.screens');
+    var gui = require('point_of_sale.gui');
     
     screens.ActionpadWidget.include({
 
@@ -153,4 +154,7 @@ odoo.define('send_order.screens', function (require) {
 
         }
     });
+
+
+ 
 });

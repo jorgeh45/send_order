@@ -9,9 +9,19 @@ class pos_bus(models.Model):
     _name = "pos.bus"
     _description = "Branch/Store of shops"
 
-    name = fields.Char('Location Name', required=1)
-    user_id = fields.Many2one('res.users', string='Sale admin')
-    log_ids = fields.One2many('pos.bus.log', 'bus_id', string='Logs')
+    name = fields.Char('Nombre', required=1)
+
+    from_remote_server = fields.Boolean(string='Sucursal Remota')
+
+    remote_user  = fields.Char('User')
+    remote_password  = fields.Char('Password')
+    remote_server  = fields.Char('Server')
+    remote_db  = fields.Char('Database')
+
+
+    
+    # user_id = fields.Many2one('res.users', string='Sale admin')
+    # log_ids = fields.One2many('pos.bus.log', 'bus_id', string='Logs')
 
 class pos_bus_log(models.Model):
     _name = "pos.bus.log"

@@ -24,7 +24,7 @@
                         </div>
 
 
-
+<!-- 
                         <div class="col-xs-12 col-md-6 o_setting_box" title="Permit search the sent orders">
                             <div class="o_setting_left_pane">
                                 <field name="search_pos_orders"/>
@@ -35,7 +35,7 @@
                                     Search the sent orders and select it
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
 
 
@@ -74,17 +74,27 @@
                             </div>
                         </div>
 
-
-                        <div class="col-xs-12 col-md-6 o_setting_box" id="bus_id">
+                        <div class="col-xs-6 col-md-6 o_setting_box" title="Utilizar pin de seguridad" attrs="{'invisible': [('send_pos_orders', '=', False)]}" >
+                            <div class="o_setting_left_pane">
+                                <field name="use_password"/>
+                            </div>
                             <div class="o_setting_right_pane">
-                                <div class="content-group mt16" attrs="{'invisible': [('search_pos_orders', '=', False),
-                                               ('send_pos_orders', '=', False)]}">
+                                <label for="use_password" string="Utilizar contraseña"/>
+                                <div class="text-muted">
+                                    Solicitar pin de seguridad al enviar la orden
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="Sucursal">
+                            <div class="o_setting_right_pane">
+                                <div class="content-group mt16" attrs="{'invisible': [('send_pos_orders', '=', False)]}">
 
                                     <label for="bus_id"/>
                                     <div class="row mt16">
-                                        <label string="Notifier" for="bus_id" class="col-md-3 o_light_label"/>
-                                        <field name="bus_id" attrs="{'required': ['|',('search_pos_orders', '=', True),
-                                               ('send_pos_orders', '=', True)]}"/>
+                                        <label string="Sucursal" for="bus_id" class="col-md-3 o_light_label"/>
+                                        <field name="bus_id" attrs="{'required': [('send_pos_orders', '=', True)]}"/>
                                     </div>
                                 </div>
                             </div>

@@ -178,5 +178,11 @@ odoo.define('send_order.database', function (require) {
                 this.shipment_order_search_string += this._shipment_order_search_string(order);
             }
         },
+        set_seller: function(user){
+            this.seller = user;
+        },
+        get_seller: function(){
+            return this.seller;
+        },
     });
 });

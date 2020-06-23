@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_bus_form" model="ir.ui.view">
+            <field name="name">pos.bus.form</field>
+            <field name="model">pos.bus</field>
+            <field name="arch" type="xml">
+                <form string="pos_bus">
+                    <sheet>
+                        <group string= "Sucursal">
+                            <field name="name"/>
+                            <field name="from_remote_server"/>
+                        </group>
+
+                        <group string = "Acceso al Servidor Remoto" attrs="{'invisible': [('from_remote_server', '=', False)]}" >
+                            <field name="remote_server"/>
+                            <field name="remote_db"/>
+                            <field name="remote_user"/>
+                            <field name="remote_password"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_bus">
+            <field name="name">Pos Bus</field>
+            <field name="res_model">pos.bus</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_bus"
+                  name = "Sucursales"
+                  action="action_pos_bus"
+                  parent="menu_sent_order"
+                  sequence="115"/>
+
+    </data>
+</odoo>
