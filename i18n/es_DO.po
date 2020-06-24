@@ -485,7 +485,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:send_order.action_pos_order_sent
 #: model:ir.ui.menu,name:send_order.menu_action_pos_order_sent
 msgid "Shipment"
-msgstr "Wnvio"
+msgstr "Pedidos Enviados"
 
 #. module: send_order
 #. openerp-web

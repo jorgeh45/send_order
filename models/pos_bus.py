@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
+
+
 from odoo import api, models, fields, registry
+from odoo.exceptions import UserError
 import json
 import logging
+
+try:
+    from xmlrpc import client as xmlrpclib
+except ImportError:
+    import xmlrpclib
 
 _logger = logging.getLogger(__name__)
 
@@ -16,7 +24,71 @@ class pos_bus(models.Model):
     remote_user  = fields.Char('User')
     remote_password  = fields.Char('Password')
     remote_server  = fields.Char('Server')
+    remote_port  = fields.Char('Port', default=8069)
     remote_db  = fields.Char('Database')
+
+
+    def test_connection(self):
+
+        HOST = self.remote_server
+        PORT = int(self.remote_port) 
+        DB = self.remote_db
+        USER = self.remote_user
+        PASS = self.remote_password
+
+        con = False
+
+        try:
+            url = 'http://%s:%d/xmlrpc/'%(HOST,PORT)
+            object_proxy = xmlrpclib.ServerProxy(url+'object')
+            common_proxy = xmlrpclib.ServerProxy(url+'common')
+
+            uid = common_proxy.login(DB,USER,PASS)
+            print("") 
+            print("Login %s (uid:%d)"%(USER,uid)) 
+            print("") 
+            con = True
+        except:
+            raise UserError("Error tratando de conectar con el servidor, por favor verificar los datos")
+
+        if con:
+            raise UserError("Conexion exitosa!")
+        
+    def test_server(self):
+
+        if self.from_remote_server:
+            self.test_connection()
+
+    def create_order_in_another_server(self,values):
+
+        HOST = self.remote_server
+        PORT = int(self.remote_port) 
+        DB = self.remote_db
+        USER = self.remote_user
+        PASS = self.remote_password
+
+        vals = values.get('data', False)
+        commands  = 'pos.order.sent', 'create', vals
+
+        # import ipdb; ipdb.set_trace()
+        try:
+            url = 'http://%s:%d/xmlrpc/'%(HOST,PORT)
+            object_proxy = xmlrpclib.ServerProxy(url+'object')
+            common_proxy = xmlrpclib.ServerProxy(url+'common')
+
+            uid = common_proxy.login(DB,USER,PASS)
+            object_proxy.execute(DB, uid, PASS, *commands)
+
+            return json.dumps({
+                'status': 'OK',
+                'code': 200
+            })
+
+        except:
+            raise UserError("Error tratando de conectar con el servidor, por favor verificar los datos")
+
+        
+
 
 
     

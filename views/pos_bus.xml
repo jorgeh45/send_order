@@ -7,17 +7,21 @@
             <field name="model">pos.bus</field>
             <field name="arch" type="xml">
                 <form string="pos_bus">
+                    <header>
+                        <button name = "test_server" string="Comprobar conexion" type = "object" class = "oe_highlight" attrs="{'invisible': [('from_remote_server', '=', False)]}" />
+                      </header>
                     <sheet>
                         <group string= "Sucursal">
                             <field name="name"/>
                             <field name="from_remote_server"/>
                         </group>
 
-                        <group string = "Acceso al Servidor Remoto" attrs="{'invisible': [('from_remote_server', '=', False)]}" >
-                            <field name="remote_server"/>
-                            <field name="remote_db"/>
-                            <field name="remote_user"/>
-                            <field name="remote_password"/>
+                        <group string = "Acceso al Servidor Remoto" attrs="{'invisible': [('from_remote_server', '=', False)]}">
+                            <field name="remote_server" attrs="{'required': [('from_remote_server', '=', True)]}"/>
+                            <field name="remote_port" attrs="{'required': [('from_remote_server', '=', True)]}"/>
+                            <field name="remote_db" attrs="{'required': [('from_remote_server', '=', True)]}"/>
+                            <field name="remote_user" attrs="{'required': [('from_remote_server', '=', True)]}"/>
+                            <field name="remote_password" attrs="{'required': [('from_remote_server', '=', True)]}"/>
                         </group>
                     </sheet>
                 </form>

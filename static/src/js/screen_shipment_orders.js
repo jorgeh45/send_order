@@ -492,13 +492,6 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                 self.renderElement();
             });
 
-
-
-            if (this.pos.config.keyboard_event) {
-                this.start_keyboard({
-                    move: true,
-                });
-            }
             this.seller = false;
             this.line_list_ship = []
 
@@ -507,13 +500,16 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                 self.pos.trigger('back:order');
             });
 
+            this.remote_bus = false;
+
         },
         show: function () {
-          
+
             this._super();
             this.scroll = this.el.querySelector('.touch-scrollable');
-            
+
             let self = this;
+            this.remote_bus = false;
             self.seller = this.pos.db.get_seller();
             let note = this.$('.sent_note');
             let send_branch = this.$('.send_shipment_to_branch');
@@ -534,6 +530,7 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                 self.show_orders();
             });
 
+
             this.show_orders();
 
         },
@@ -551,15 +548,6 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                     }
                     this.pos.db.save_data_sync_sent_order(list_orders);
                     this.render_shipment_order_list(this.pos.db.shipment_orders_store);
-
-                    if (self.pos.config.keyboard_event) {
-                        self.active_keyboard();
-                        self.get_lines();
-                        self.remove_select_line();
-                        if (!self.seller) {
-                            self.change_selected_line(39); // DOWN To the LIST
-                        }
-                    }
                 }
             });
 
@@ -571,7 +559,7 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
 
             this._super();
             this.$('.back').click(function () {
-            
+
                 // self.gui.show_screen('products');
                 self.gui.back();
                 self.pos.trigger('back:order');
@@ -579,18 +567,18 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
             });
 
             this.$('.send_shipment').click(function () {
-                if (self.$('.sent_note').val().length > 0) {
-                
+                // if (self.$('.sent_note').val().length > 0) {
+
                     self.send_order(self.pos.config.bus_id[0]);
                     self.pos.trigger('back:order');
-                } else {
-                    self.$('.sent_note').focus();
-                }
+                // } else {
+                //     self.$('.sent_note').focus();
+                // }
             });
 
             this.$('.send_shipment_to_branch').click(function () {
                 if (self.$('.sent_note').val().length > 0) {
-                
+
                     self.send_order_to_branch();
                     self.pos.trigger('back:order');
                 } else {
@@ -608,7 +596,7 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
         order_select: function (event, $order, id) {
             let self = this;
             let order = self.pos.db.shipment_order_by_id[id];
-        
+
             this.select_order_sent(order.uid).then(() => {
 
                 this.pos.pos_bus.push_message_to_other_sessions({
@@ -655,12 +643,12 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                 new_order.is_sent = true;
 
                 new_order.sent_note = order.sent_note;
-                
+
                 self.pos.set('selectedOrder', new_order);
-                
+
                 self.gui.show_screen('products');
                 self.pos.trigger('back:order');
-                
+
             });
             self.pos.trigger('back:product');
 
@@ -700,8 +688,9 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
         send_order: function (bus_id) {
             var self = this;
             let order = self.pos.get_order();
+
             if (order.get_orderlines().length == 0) {
-                self.gui.show_popup('confirm_key_event', {
+                self.gui.show_popup('confirm', {
                     'title': 'Error: Orden Sin Productos',
                     'body': 'No se ha agregado productos a la orden, no se puede realiza una precuenta vacia.',
                     'confirm': function () {
@@ -739,25 +728,36 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                 id: order.uid.replace(/-/g, ''),
                 bus_id: bus_id
             }).then(function (response) {
-                let res = JSON.parse(response);
-                if (res.code == 200) {
 
-                    self.pos.pos_bus.push_message_to_other_sessions({
-                        data: order['uid'],
-                        action: 'sent_order',
-                        bus_id: bus_id,
-                        order_uid: order['uid']
-                    });
-                    self.pos.delete_current_order();
-                    self.gui.show_screen('products');
+                try {
+                    
+                
+                    let res = JSON.parse(response);
+                    if (res.code == 200) {
+
+                        self.pos.pos_bus.push_message_to_other_sessions({
+                            data: order['uid'],
+                            action: 'sent_order',
+                            bus_id: bus_id,
+                            order_uid: order['uid']
+                        });
+                        self.pos.delete_current_order();
+                        self.gui.show_screen('products');
 
 
-                } else {
+                    } else {
+                        let mesg = "No se pudo enviar la orden"
+                        self.pos.gui.show_popup('dialog', {
+                            title: mesg
+                        })
+                        console.error(mesg)
+                    }
+
+                } catch (error) {
                     let mesg = "No se pudo enviar la orden"
                     self.pos.gui.show_popup('dialog', {
-                        title: mesg
+                        title: "Error  enviando la orden"
                     })
-                    console.error(mesg)
                 }
 
             });
@@ -772,15 +772,16 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                     [
                         ['id', '!=', self.pos.config.bus_id[0]]
                     ],
-                    ['id', 'name']
+                    ['id', 'name', 'from_remote_server']
                 ]
             }).then(function (result) {
                 if (result) {
 
-                    let list_bus = result.map((e) => {
+                    var list_bus = result.map((e) => {
                         return {
                             label: e.name,
                             item: e.id,
+                            remote: e.from_remote_server
                         }
                     });
 
@@ -788,6 +789,13 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                         title: "Branch",
                         list: list_bus,
                         confirm: function (item) {
+                            let bus = list_bus.find((bus) => {
+                                return bus.item === item
+                            })
+                            
+                            if(bus.remote){
+                                self.remote_bus = true;
+                            }
                             self.send_order(item);
                         }
                     });
@@ -797,17 +805,36 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
             });
 
         },
-        send_order_to_server: function (order, bus_id) {
-            return this._rpc({
-                route: '/pos/send_order',
-                params: {
+        send_order_to_server: function (order) {
+
+            if (!this.remote_bus) {
+                return this._rpc({
+                    route: '/pos/send_order',
+                    params: {
+                        'data': {
+                            'uid_order': order.uid,
+                            'order_data': JSON.stringify(order),
+                            'bus_id': order.bus_id
+                        }
+                    }
+                });
+            } else {
+
+                let params = {
                     'data': {
                         'uid_order': order.uid,
                         'order_data': JSON.stringify(order),
                         'bus_id': order.bus_id
                     }
                 }
-            });
+
+                return this._rpc({
+                    model: 'pos.bus',
+                    method: 'create_order_in_another_server',
+                    args: [[order.bus_id], params]
+                });
+
+            }
         },
         get_orders_sent: function () {
             return this._rpc({
@@ -873,7 +900,7 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                                     // let line_will_select = this.line_list_ship[i];
                                     self.remove_select_line(false);
 
-                                   
+
 
                                     this.$('.sent_note').focus();
                                 } else {

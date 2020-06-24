@@ -248,6 +248,13 @@
     </t>
 
 
+    <t t-extend="Orderline">
+ 
+        <t t-jquery="li" t-operation="attributes">
+          <attribute name="t-attf-class">orderline #{ line.selected ? 'selected' : '' } #{ line.is_sent ? 'disabled' : '' }</attribute>
+        </t>
+      </t>
+
  
 
 
