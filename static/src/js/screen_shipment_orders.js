@@ -500,8 +500,66 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
                 self.pos.trigger('back:order');
             });
 
+            this.last_rows_count = 0;
             this.remote_bus = false;
+            this.interval_polling  = false;
+            this.check_bus();
 
+            // setInterval(function(){ alert("Hello"); }, 3000);
+            this.OnSenderOrdersPolling();
+
+            this.pos.bind('back:order', function () {
+                clearInterval(self.interval_polling);
+            });
+
+        },
+        OnSenderOrdersPolling:function(){
+            var self = this;
+            console.log(self.pos.config.bus_id[0]);
+            this._rpc({
+                model: 'pos.order.sent',
+                method: 'search_read',
+                args: [
+                    [
+                        ['bus_id', '=', self.pos.config.bus_id[0]]
+                    ],
+                    ['id']
+                ]
+            }).then(function (result) {
+                console.log(result);
+
+                let count = result ? result.length : 0;
+
+                if(self.last_rows_count != count){
+
+                    
+                    self.last_rows_count = count;
+                    self.pos.trigger('sync:order_sent');
+
+                }
+            });
+
+        },
+        check_bus:function(){
+            let self = this;
+
+            this._rpc({
+                model: 'pos.bus',
+                method: 'search_read',
+                args: [
+                    [
+                        ['id', '=', self.pos.config.bus_id[0]]
+                    ],
+                    ['id', 'name', 'from_remote_server']
+                ]
+            }).then(function (result) {
+                if (result) {
+                    let remote = result[0].from_remote_server
+                    if(remote){
+                        self.remote_bus = true;
+                    }
+                }
+            });
         },
         show: function () {
 
@@ -527,11 +585,14 @@ odoo.define('send_order.screen_shipment_orders', function (require) {
             }
 
             this.pos.bind('sync:order_sent', function () {
+                console.log("Sync de orders");
                 self.show_orders();
             });
 
 
             this.show_orders();
+
+            this.interval_polling = setInterval(function(){ self.OnSenderOrdersPolling() }, 5000);
 
         },
         show_orders: function () {
