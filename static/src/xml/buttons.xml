@@ -15,4 +15,26 @@
         </span>
     </t>
 
+    <t t-name="ask_password">
+        <div class="swal2-container swal2-fade swal2-in" style="overflow-y: auto;">
+            <div class="swal2-modal swal2-show"
+                 style="display: block; width: 500px; padding: 20px; background: rgb(255, 255, 255); min-height: 340px;"
+                 tabindex="-1">
+                <div class="swal2-icon swal2-warning pulse-warning" style="display: block;">!</div>
+                <h2><t t-esc=" widget.options.title || 'Confirm ?' " /></h2>
+                <div class="swal2-content" style="display: block;"><t t-esc="  widget.options.body || '' "/>
+                </div>
+                <div class="row" style="padding-bottom: 40px; padding-top: 40px">
+                    <div class="form-group label-floating is-empty">
+                        <input type="text" autocomplete="anyrandomstring" class="input_form password_input_with_dots" style="border:1px #c57272 !important; background: #1d70ab; color: black,-webkit-text-security: disc;"/>
+                    </div>
+                </div>
+                <div class="footer">
+                    <span type="button" class="swal2-confirm btn btn-success button confirm">Unlock</span>
+                </div>
+            </div>
+        </div>
+    </t>
+
+
 </templates>

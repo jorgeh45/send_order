@@ -2,6 +2,7 @@
 odoo.define('send_order.screens', function (require) {
 
     var screens = require('point_of_sale.screens');
+    var gui = require('point_of_sale.gui');
     
     screens.ActionpadWidget.include({
 
@@ -129,9 +130,7 @@ odoo.define('send_order.screens', function (require) {
                 invoiced.done(function(){
                     self.invoicing = false;
                     self.gui.show_screen('receipt');
-                    if(this.pos.config.print_picking_ticket){
-
-                    }
+  
                 });
             } else {
                 this.pos.push_order(order);
@@ -155,4 +154,7 @@ odoo.define('send_order.screens', function (require) {
 
         }
     });
+
+
+ 
 });

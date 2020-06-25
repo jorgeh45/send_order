@@ -18,3 +18,94 @@
     top: -1px;
     right: 2px;
 }
+
+
+.pos .input-box input {
+    /* width: 180px; */
+    border: none;
+    padding: 10px 20px;
+    padding-left: 38px;
+    margin: 12px;
+    background-color: white;
+    font-weight: 900;
+    border-radius: 5px;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-size: 13px;
+}
+
+.pos .input-box input:focus {
+    outline: none;
+    box-shadow: 0px 0px 0px 2px rgb(153, 153, 255) inset;
+    color: rgb(153, 153, 255);
+}
+
+.pos .input_form {
+    border: 1px #c57272 !important;
+    color: black;
+    width: 100%;
+    background: #eeeeee;
+    border-radius: 6px;
+    font-size: 30px;
+    font-weight: bold;
+    height: 50px;
+}
+
+
+.pos .input-box .input-note {
+    width: 400px;
+}
+
+
+@font-face
+    {
+    font-family:'dotsfont';
+    src:url('dotsfont.eot');
+    src:url('dotsfont.eot?#iefix')  format('embedded-opentype'),
+        url('dotsfont.svg#font')    format('svg'),
+        url('dotsfont.woff')        format('woff'),
+        url('dotsfont.ttf')         format('truetype');
+    font-weight:normal;
+    font-style:normal;
+}
+
+input.password_input_with_dots
+    {-webkit-text-security:disc;font-family:dotsfont;}
+
+
+    .send_branch .button {
+        position: absolute;
+        bottom: 0px;
+        line-height: 32px;
+        padding: 3px 13px;
+        font-size: 20px;
+        background: #FF554F;
+        margin: 12px;
+        border-radius: 5px;
+        border: solid 1px rgb(209, 209, 209);
+        cursor: pointer;
+        transition: all 150ms linear;
+        color: white;
+        right: 0px;
+    }
+    .send_branch .button:hover {
+        background: #FF1F1B
+    }
+    .send_branch .button:active {
+        background: black;
+        border-color: black;
+        color: white;
+    }
+    .send_branch .button.highlight {
+        background: rgb(110,200,155);
+        color: white;
+        border: solid 1px rgb(110,200,155);
+    }
+    .send_branch .button.highlight:hover {
+        background: rgb(120,210,165);
+    }
+
+    
+    .disabled {
+        pointer-events:none; 
+        opacity:0.6;      
+    }

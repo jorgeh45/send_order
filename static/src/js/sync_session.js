@@ -51,6 +51,7 @@ odoo.define('send_order.synchronization', function (require) {
             if (this.pos.the_first_load || this.pos.the_first_load == undefined || !this.pos.config.bus_id) { // when cashier come back pos screen (reload browse) no need sync data
                 return;
             }
+            console.log("Envie Algo");
             var self = this;
             if (!value['order_uid']) {
                 return;
@@ -147,6 +148,7 @@ odoo.define('send_order.synchronization', function (require) {
         },
         syncing_sessions: function (message) {
             let action = message['action'];
+            console.log("Mandaron una accion");
             if (action == 'sent_order') {
                 this.trigger('sync:order_sent')
             }

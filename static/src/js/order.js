@@ -11,8 +11,44 @@ odoo.define('send_order.order', function (require) {
     var core = require('web.core');
     var _t = core._t;
 
+
+    models.load_fields('pos.config', ['use_password']);
+
     var _super_Order = models.Order.prototype;
     models.Order = models.Order.extend({
+
+        init_from_JSON: function (json) {
+            var res = _super_Order.init_from_JSON.apply(this, arguments);
+            
+            if (json.parent_id) {
+                this.parent_id = json.parent_id;
+            }
+        
+            if (json.note) {
+                this.note = json.note
+            }
+
+            if (json.sender) {
+                this.sender = json.sender;
+            }
+
+            if (json.sent_note) {
+                this.sent_note = json.sent_note;
+            }
+            if (json.seller_cashier) {
+                this.seller_cashier = json.seller_cashier;
+                this.user_id = json.seller_cashier.id;
+            }
+
+            if (json.cashier_id) {
+                this.cashier_id = json.cashier_id.id;
+            }
+
+            if (json.from_another_server) {
+                this.from_another_server = json.from_another_server;
+            }
+            return res;
+        },
 
         export_as_JSON: function () {
             var json = _super_Order.export_as_JSON.apply(this, arguments);
@@ -24,8 +60,59 @@ odoo.define('send_order.order', function (require) {
             if (this.partner_id) {
                 json.partner_id = this.partner_id;
             }
+
+            if (this.sender) {
+                json.sender = this.sender;
+            }
+
+            if (this.sent_note) {
+                json.sent_note = this.sent_note;
+            }
+            if (this.seller_cashier) {
+                json.seller_cashier = this.seller_cashier;
+                json.user_id = this.seller_cashier.id;
+            }
+
+            if (this.cashier_id) {
+                json.cashier_id = this.cashier_id.id;
+            }
+
+            if (this.from_another_server) {
+                json.from_another_server = this.from_another_server;
+            }
+
             return json;
         }
+    });
+
+
+    var _super_Orderline = models.Orderline.prototype;
+    models.Orderline = models.Orderline.extend({
+        init_from_JSON: function (json) {
+            var res = _super_Orderline.init_from_JSON.apply(this, arguments);
+
+            this.is_sent = json.is_sent || false;
+
+            if (json.seller) {
+                this.seller = json.seller;
+            }
+
+            return res;
+        },
+        export_as_JSON: function () {
+            var json = _super_Orderline.export_as_JSON.apply(this, arguments);
+
+            if (this.is_sent) {
+                json.is_sent = this.is_sent;
+            }
+
+            if (this.seller) {
+                json.seller = this.seller;
+            }
+
+
+            return json;
+        },
     });
 
     var _super_PosModel = models.PosModel.prototype;

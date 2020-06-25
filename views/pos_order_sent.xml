@@ -49,9 +49,10 @@
                   groups="point_of_sale.group_pos_manager"/>
 
         <menuitem id="menu_action_pos_order_sent"
-                  action="action_pos_order_sent"
-                  parent="menu_sent_order"
-                  sequence="115"/>
+                name="Pedidos"
+                action="action_pos_order_sent"
+                parent="menu_sent_order"
+                sequence="115"/>
 
 
        
