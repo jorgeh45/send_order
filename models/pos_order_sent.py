@@ -17,6 +17,10 @@ class PosOrderSent(models.Model):
         string=u'Bus id',
     )
 
+    pos_config_id = fields.Integer(
+        string=u'Pos Config ID',
+    )
+
     def get_order_sent(self, uid):
         res = {}
         order = self.search(['uid_order', '=', uid])

@@ -87,6 +87,33 @@
                         </div>
 
 
+                        <div class="col-xs-6 col-md-6 o_setting_box" title="Modo Multi Pos" attrs="{'invisible': [('send_pos_orders', '=', False)]}" >
+                            <div class="o_setting_left_pane">
+                                <field name="multi_pos_mode"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="multi_pos_mode" string="Activar Modo Multi Pos"/>
+                                <div class="text-muted">
+                                    Activar el modo multi pos para que los proceso sean mas rapidos.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6 col-md-6 o_setting_box" title="Envios Sucursales" attrs="{'invisible': [('send_pos_orders', '=', False)]}" >
+                            <div class="o_setting_left_pane">
+                                <field name="send_branch"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="send_branch" string="Enviar hacia sucursales"/>
+                                <div class="text-muted">
+                                    Activar para poder enviar ordernes a diferentes sucursales
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+
                         <div class="col-xs-12 col-md-6 o_setting_box" id="Sucursal">
                             <div class="o_setting_right_pane">
                                 <div class="content-group mt16" attrs="{'invisible': [('send_pos_orders', '=', False)]}">

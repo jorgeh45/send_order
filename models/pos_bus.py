@@ -59,35 +59,61 @@ class pos_bus(models.Model):
         if self.from_remote_server:
             self.test_connection()
 
+
+    def get_pos_config_from_another_server(self):
+
+        try:
+            # commands  = 'pos.config', 'search_read', [[['active', '=', True]]],  {'fields': ['id', 'name']}
+
+            records = self.execute_command('pos.config', 'search_read', [['active', '=', True]], ['id', 'name']);
+
+            return json.dumps({
+                'status': 'OK',
+                'code': 200,
+                'data': records
+            })
+          
+        except:
+            raise UserError("Error tratando de conectar con el servidor, por favor verificar los datos")
+    
     def create_order_in_another_server(self,values):
+
+        vals = values.get('data', False)
+        # commands  = 'pos.order.sent', 'create', vals
+
+        try:
+
+            records =  self.execute_command('pos.order.sent', 'create', vals);
+
+            return json.dumps({
+                'status': 'OK',
+                'code': 200,
+                'data': records
+            })
+          
+        except:
+            raise UserError("Error tratando de conectar con el servidor, por favor verificar los datos")
+
+    def execute_command(self,*args):
 
         HOST = self.remote_server
         PORT = int(self.remote_port) 
         DB = self.remote_db
         USER = self.remote_user
         PASS = self.remote_password
-
-        vals = values.get('data', False)
-        commands  = 'pos.order.sent', 'create', vals
-
-        # import ipdb; ipdb.set_trace()
+        
         try:
             url = 'http://%s:%d/xmlrpc/'%(HOST,PORT)
             object_proxy = xmlrpclib.ServerProxy(url+'object')
             common_proxy = xmlrpclib.ServerProxy(url+'common')
 
             uid = common_proxy.login(DB,USER,PASS)
-            object_proxy.execute(DB, uid, PASS, *commands)
-
-            return json.dumps({
-                'status': 'OK',
-                'code': 200
-            })
+            records = object_proxy.execute(DB, uid, PASS, *args)
+            # import ipdb; ipdb.set_trace()
+            return records
 
         except:
             raise UserError("Error tratando de conectar con el servidor, por favor verificar los datos")
-
-        
 
 
 

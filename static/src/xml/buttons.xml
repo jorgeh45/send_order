@@ -15,6 +15,13 @@
         </span>
     </t>
 
+    <t t-name="button_go_send_brand_screen">
+        <span class="control-button send_brand">
+            <i class="fa fa-cloud"></i>
+            Enviar Sucursales
+        </span>
+    </t>
+
     <t t-name="ask_password">
         <div class="swal2-container swal2-fade swal2-in" style="overflow-y: auto;">
             <div class="swal2-modal swal2-show"

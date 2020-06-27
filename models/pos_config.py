@@ -18,6 +18,8 @@ class PosConfig(models.Model):
     print_shipment_ticket = fields.Boolean('Print shipment ticket', default=0)
     print_picking_ticket = fields.Boolean('Print picking ticket', default=0)
     use_password = fields.Boolean(u'Utilizar contraseña', default=0)
+    multi_pos_mode = fields.Boolean(u'Modo Restaurante', default=0)
+    send_branch = fields.Boolean(u'Enviar hacia sucursales', default=0)
 
 
     bus_id = fields.Many2one('pos.bus', string='Server', default= _default_bus_id )

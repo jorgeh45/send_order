@@ -23,6 +23,26 @@ class PosOrderSent(http.Controller):
                 'data': json.loads(order['order_data'])
             })
         return sent_orders
+        
+    @http.route('/pos/get_orders_sent_by_pos', auth='user', type='json', cors="*")
+    def get_orders_sent_by_pos(self, **args):
+        pos_config_id = args.get('pos_config_id', False)
+        if not pos_config_id:
+            return []
+        sent_orders = []
+        pos_order_sent_obj = http.request.env['pos.order.sent'].sudo()
+
+        orders = pos_order_sent_obj.search_read(
+            [('pos_config_id', '=', pos_config_id)], ['id', 'uid_order', 'order_data'])
+        # import ipdb; ipdb.set_trace()
+        for order in orders:
+            sent_orders.append({
+                'id': order['id'],
+                'uid': order['uid_order'],
+                'data': json.loads(order['order_data'])
+            })
+        return sent_orders
+
 
     @http.route('/pos/send_order', auth='public', type='json', cors="*")
     def create_order_sent(self, **args):

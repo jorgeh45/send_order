@@ -12,7 +12,7 @@ odoo.define('send_order.order', function (require) {
     var _t = core._t;
 
 
-    models.load_fields('pos.config', ['use_password']);
+    models.load_fields('pos.config', ['use_password','multi_pos_mode','send_brands']);
 
     var _super_Order = models.Order.prototype;
     models.Order = models.Order.extend({
@@ -32,9 +32,6 @@ odoo.define('send_order.order', function (require) {
                 this.sender = json.sender;
             }
 
-            if (json.sent_note) {
-                this.sent_note = json.sent_note;
-            }
             if (json.seller_cashier) {
                 this.seller_cashier = json.seller_cashier;
                 this.user_id = json.seller_cashier.id;
@@ -47,6 +44,14 @@ odoo.define('send_order.order', function (require) {
             if (json.from_another_server) {
                 this.from_another_server = json.from_another_server;
             }
+
+            if (json.order_note) {
+                this.order_note = json.order_note;
+            }            
+
+            this.is_sent = json.is_sent || false;
+            this.sent_note = json.sent_note || '';
+            
             return res;
         },
 
@@ -81,7 +86,23 @@ odoo.define('send_order.order', function (require) {
                 json.from_another_server = this.from_another_server;
             }
 
+            if (this.is_sent) {
+                json.is_sent = this.is_sent;
+            }
+
             return json;
+        },
+        get_sent_note:function () {
+            return  this.sent_note;
+        },
+        set_sent_note:function (note) {
+            this.sent_note = note;
+        },
+        get_is_sent:function () {
+            return  this.is_sent;
+        },
+        set_is_sent:function (val) {
+            this.is_sent = val;
         }
     });
 

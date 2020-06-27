@@ -151,50 +151,201 @@ odoo.define('send_order.buttons', function (require) {
     var button_go_send_pos_orders_screen = screens.ActionButtonWidget.extend({ // shipment orders management
         template: 'button_go_send_pos_orders_screen',
         button_click: function () {
-
             let self = this
             let order = self.pos.get_order();
-            if (order.get_orderlines().length > 0) {
-                if (self.pos.config.use_password) {
 
-                    self.pos.gui.show_popup('ask_password', {
-                        title: 'Blocked',
-                        body: 'Please input your pos pass pin',
-                        confirm: function (value) {
-                            let seller = this.pos.db.get_seller();
-                            if (seller && seller.pos_security_pin === value) {
-                                self.gui.show_screen('send_orders_screen');
-                                return;
-                            }
-                            var users = self.pos.users;
-                            let user = users.find((user) => {
-                                return user.pos_security_pin === value
-                            })
-                            if (!user) {
-                                return self.pos.gui.show_popup('confirm', {
-                                    title: 'Wrong',
-                                    body: 'Password not correct, please check pos security pin',
+            if (!self.pos.config.multi_pos_mode) {
+
+                if (order.get_orderlines().length > 0) {
+                    if (self.pos.config.use_password) {
+                        self.pos.gui.show_popup('ask_password', {
+                            title: 'Blocked',
+                            body: 'Please input your pos pass pin',
+                            confirm: function (value) {
+                                let seller = this.pos.db.get_seller();
+                                if (seller && seller.pos_security_pin === value) {
+                                    self.gui.show_screen('send_orders_screen');
+                                    return;
+                                }
+                                var users = self.pos.users;
+                                let user = users.find((user) => {
+                                    return user.pos_security_pin === value
                                 })
-                            } else {
+                                if (!user) {
+                                    return self.pos.gui.show_popup('confirm', {
+                                        title: 'Wrong',
+                                        body: 'Password not correct, please check pos security pin',
+                                    })
+                                } else {
 
-                                self.pos.db.set_seller(user);
-                                self.gui.show_screen('send_orders_screen');
+                                    self.pos.db.set_seller(user);
+                                    self.gui.show_screen('send_orders_screen');
+                                }
+
+
                             }
+                        });
+                    } else {
 
+                        self.pos.db.set_seller(order.pos.get_cashier());
+                        self.gui.show_screen('send_orders_screen');
 
-                        }
-                    });
+                    }
                 } else {
-
-                    self.pos.db.set_seller(order.pos.get_cashier());
+                    self.pos.db.set_seller(false);
                     self.gui.show_screen('send_orders_screen');
-
                 }
             } else {
-                self.pos.db.set_seller(false);
-                self.gui.show_screen('send_orders_screen');
+
+                if (order.get_orderlines().length == 0) {
+                    self.gui.show_popup('confirm', {
+                        'title': 'Error: Orden Sin Productos',
+                        'body': 'No se ha agregado productos a la orden, no se puede realiza una precuenta vacia.',
+                        'confirm': function () {
+                            self.gui.show_screen('products');
+                            self.pos.trigger('back:order');
+                        },
+                        'cancel': function () {
+                            self.gui.show_screen('products');
+                            self.pos.trigger('back:order');
+                        }
+                    });
+
+                    return;
+                }
+
+                self.send_order_to_branch();
+
             }
-        }
+        },
+        send_order_to_branch: function () {
+            let self = this;
+            this._rpc({
+                model: 'pos.config',
+                method: 'search_read',
+                args: [
+                    [
+                        ['id', '!=', self.pos.config.id]
+                    ],
+                    ['id', 'name', ]
+                ]
+            }).then(function (result) {
+                if (result) {
+
+                    var list_pos = result.map((e) => {
+                        return {
+                            label: e.name,
+                            item: e.id,
+                        }
+                    });
+
+                    self.gui.show_popup("selection", {
+                        title: "Sucursales",
+                        list: list_pos,
+                        confirm: function (item) {
+                            self.send_order(item);
+                        }
+                    });
+
+                } else {
+                    self.gui.show_popup('error', {
+                        'title': 'Error: Enviar Orden',
+                        'body': 'No hay mas sucursales configuradas',
+                    });
+
+                }
+            });
+
+        },
+        send_order: function (brand) {
+            var self = this;
+            let order = self.pos.get_order();
+
+
+            order.partner_id = order.get_client();
+            order.amount_total = order.get_total_with_tax();
+            order.is_sent = true;
+            order.seller_cashier = order.pos.get_cashier();
+
+
+            let lines = order.orderlines.models;
+            for (let i = 0; i < lines.length; i++) {
+                lines[i].is_sent = true;
+                if (!lines[i].seller) {
+                    lines[i].seller = order.seller_cashier.id;
+                }
+            }
+
+            console.log(order.export_as_JSON());
+            console.log("Se envio la orden");
+            self.send_order_to_server({
+                ...order.export_as_JSON(),
+                id: order.uid.replace(/-/g, ''),
+                bus_id: 1,
+                pos_config_id: brand
+            }).then(function (response) {
+
+                try {
+                    let res = JSON.parse(response);
+                    if (res.code == 200) {
+
+                        self.pos.delete_current_order();
+                        self.gui.show_screen('products');
+
+
+                    } else {
+                        let mesg = "No se pudo enviar la orden"
+                        self.pos.gui.show_popup('error', {
+                            title: mesg
+                        })
+                        console.error(mesg)
+                    }
+
+                } catch (error) {
+                    let mesg = "No se pudo enviar la orden"
+                    self.pos.gui.show_popup('error', {
+                        title: "Error  enviando la orden"
+                    })
+                }
+
+            });
+
+        },
+        send_order_to_server: function (order) {
+
+            if (!this.remote_bus) {
+                return this._rpc({
+                    route: '/pos/send_order',
+                    params: {
+                        'data': {
+                            'uid_order': order.uid,
+                            'order_data': JSON.stringify(order),
+                            'bus_id': order.bus_id,
+                            'pos_config_id': order.pos_config_id
+                        }
+                    }
+                });
+            } else {
+
+                let params = {
+                    'data': {
+                        'uid_order': order.uid,
+                        'order_data': JSON.stringify(order),
+                        'bus_id': order.bus_id,
+                        'pos_config_id': order.pos_config_id
+                    }
+                }
+
+                return this._rpc({
+                    model: 'pos.bus',
+                    method: 'create_order_in_another_server',
+                    args: [
+                        [order.bus_id], params
+                    ]
+                });
+
+            }
+        },
 
     });
 
@@ -203,6 +354,233 @@ odoo.define('send_order.buttons', function (require) {
         'widget': button_go_send_pos_orders_screen,
         'condition': function () {
             return this.pos.config.send_pos_orders == true;
+        }
+    });
+
+    var button_go_send_brand_screen = screens.ActionButtonWidget.extend({ // shipment orders management
+        template: 'button_go_send_brand_screen',
+        button_click: function () {
+            let self = this;
+            let order = self.pos.get_order();
+
+            if (order.get_orderlines().length == 0) {
+                self.gui.show_popup('confirm', {
+                    'title': 'Error: Orden Sin Productos',
+                    'body': 'No se ha agregado productos a la orden, no se puede realiza una precuenta vacia.',
+                    'confirm': function () {
+                        self.gui.show_screen('products');
+                        self.pos.trigger('back:order');
+                    },
+                    'cancel': function () {
+                        self.gui.show_screen('products');
+                        self.pos.trigger('back:order');
+                    }
+                });
+
+                return;
+            }
+
+            self.send_order_to_branch_remote();
+
+
+        },
+        send_order_to_branch_remote: function () {
+            let self = this;
+            this._rpc({
+                model: 'pos.bus',
+                method: 'search_read',
+                args: [
+                    [
+                        ['from_remote_server', '=', true]
+                    ],
+                    ['id', 'name', 'from_remote_server']
+                ]
+            }).then(function (result) {
+                if (result) {
+                    var list_bus = result.map((e) => {
+                        return {
+                            label: e.name,
+                            item: e.id,
+                            remote: e.from_remote_server
+                        }
+                    });
+
+                    self.gui.show_popup("selection", {
+                        title: "Branch",
+                        list: list_bus,
+                        confirm: function (item) {
+                            let bus = list_bus.find((bus) => {
+                                return bus.item === item
+                            })
+
+                            if (bus.remote) {
+                                self.remote_bus = true;
+                                self.remote_id = item;
+                            } else {
+                                self.remote_bus = false;
+                                self.remote_id = 1;
+                            }
+
+                            self.select_pos_config(item);
+                        }
+                    });
+
+
+                }
+            });
+
+        },
+        select_pos_config: function (bus_id) {
+            let self = this;
+            return this._rpc({
+                model: 'pos.bus',
+                method: 'get_pos_config_from_another_server',
+                args: [
+                    [bus_id]
+                ]
+            }).then(function (result) {
+                if (result) {
+                    let res = JSON.parse(result);
+
+                    var list_pos_remote = res.data.map((e) => {
+                        return {
+                            label: e.name,
+                            item: e.id,
+                        }
+                    });
+
+
+
+                    self.gui.show_popup("selection", {
+                        title: "Puntos de Ventas",
+                        list: list_pos_remote,
+                        confirm: function (item) {
+
+
+                            var order = self.pos.get_order();
+
+
+                            if (order) {
+                                self.gui.show_popup('textarea', {
+                                    title: _t('Add Order Note'),
+                                    value: order.order_note,
+                                    confirm: function (note) {
+                                        self.send_order(item,note);
+                                        // order.trigger('change', order);
+                                        // self.show();
+                                        // self.renderElement();
+                                    },
+                                    cancel: function () {
+                                        return;
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+
+
+                }
+            });
+
+        },
+        send_order: function (brand, note = "") {
+            var self = this;
+            let order = self.pos.get_order();
+
+
+            order.partner_id = order.get_client();
+            order.amount_total = order.get_total_with_tax();
+            order.is_sent = true;
+            order.seller_cashier = order.pos.get_cashier();
+            order.sent_note  = note;
+
+
+            let lines = order.orderlines.models;
+            for (let i = 0; i < lines.length; i++) {
+                lines[i].is_sent = true;
+                if (!lines[i].seller) {
+                    lines[i].seller = order.seller_cashier.id;
+                }
+            }
+
+            console.log(order.export_as_JSON());
+            console.log("Se envio la orden");
+            self.send_order_to_server({
+                ...order.export_as_JSON(),
+                id: order.uid.replace(/-/g, ''),
+                bus_id: self.remote_id,
+                pos_config_id: brand
+            }).then(function (response) {
+
+                try {
+                    let res = JSON.parse(response);
+                    if (res.code == 200) {
+
+                        self.pos.delete_current_order();
+                        self.gui.show_screen('products');
+
+
+                    } else {
+                        let mesg = "No se pudo enviar la orden"
+                        self.pos.gui.show_popup('error', {
+                            title: mesg
+                        })
+                        console.error(mesg)
+                    }
+
+                } catch (error) {
+                    let mesg = "No se pudo enviar la orden"
+                    self.pos.gui.show_popup('error', {
+                        title: "Error  enviando la orden"
+                    })
+                }
+
+            });
+
+        },
+        send_order_to_server: function (order) {
+            if (!this.remote_bus) {
+                return this._rpc({
+                    route: '/pos/send_order',
+                    params: {
+                        'data': {
+                            'uid_order': order.uid,
+                            'order_data': JSON.stringify(order),
+                            'bus_id': order.bus_id,
+                            'pos_config_id': order.pos_config_id
+                        }
+                    }
+                });
+            } else {
+
+                let params = {
+                    'data': {
+                        'uid_order': order.uid,
+                        'order_data': JSON.stringify(order),
+                        'bus_id': this.remote_id,
+                        'pos_config_id': order.pos_config_id
+                    }
+                }
+
+                return this._rpc({
+                    model: 'pos.bus',
+                    method: 'create_order_in_another_server',
+                    args: [
+                        [this.remote_id], params
+                    ]
+                });
+
+            }
+        },
+
+    });
+
+    screens.define_action_button({
+        'name': 'button_go_send_brand_screen',
+        'widget': button_go_send_brand_screen,
+        'condition': function () {
+            return this.pos.config.send_branch == true;
         }
     });
 
