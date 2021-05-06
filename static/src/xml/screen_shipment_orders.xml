@@ -263,8 +263,8 @@
 
                     <t t-foreach="widget.pos.get_order_list()" t-as="order">
                         <t t-if='order === widget.pos.get_order()'>
-                            <!-- <t t-debug="pdb"></t> -->
-                            <span t-attf-class="order-button select-order selected #{ order.get_is_sent() ? 'highlight' : '' }" t-att-data-uid="order.uid">
+                            <!-- <t t-debug="pdb"></t> --> 
+                            <span t-attf-class="order-button select-order selected  #{ order.get_is_sent() ? 'order_is_sent' : '' }" t-att-data-uid="order.uid">
                                 <span class='order-sequence'>
                                     <t t-esc='order.sequence_number' />
                                 </span>
@@ -273,7 +273,7 @@
                         </t>
                         <t t-if='order !== widget.pos.get_order()'>
 
-                            <span t-attf-class="order-button select-order #{ order.get_is_sent() ? 'highlight' : '' }" t-att-data-uid="order.uid">
+                            <span t-attf-class="order-button select-order  #{ order.get_is_sent() ? 'order_is_sent' : '' }" t-att-data-uid="order.uid">
                                 <span class='order-sequence'>
                                     <t t-esc='order.sequence_number' />
                                 </span>

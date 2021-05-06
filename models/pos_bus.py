@@ -109,7 +109,6 @@ class pos_bus(models.Model):
 
             uid = common_proxy.login(DB,USER,PASS)
             records = object_proxy.execute(DB, uid, PASS, *args)
-            # import ipdb; ipdb.set_trace()
             return records
 
         except:

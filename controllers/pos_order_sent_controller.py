@@ -15,7 +15,6 @@ class PosOrderSent(http.Controller):
 
         orders = pos_order_sent_obj.search_read(
             [('bus_id', '=', bus_id)], ['id', 'uid_order', 'order_data'])
-        # import ipdb; ipdb.set_trace()
         for order in orders:
             sent_orders.append({
                 'id': order['id'],
@@ -34,7 +33,6 @@ class PosOrderSent(http.Controller):
 
         orders = pos_order_sent_obj.search_read(
             [('pos_config_id', '=', pos_config_id)], ['id', 'uid_order', 'order_data'])
-        # import ipdb; ipdb.set_trace()
         for order in orders:
             sent_orders.append({
                 'id': order['id'],
